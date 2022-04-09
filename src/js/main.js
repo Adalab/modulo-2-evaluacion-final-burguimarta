@@ -1,7 +1,8 @@
 'use strict';
-
+// Variables de HTML
 const coctelInput = document.querySelector('.js-coctelInput');
-const list = document.querySelector('.js_list');
+const list = document.querySelector('.js-list');
+
 
 document.querySelector('.js-searchbtn').addEventListener('click', function(event) {
   event.preventDefault();
@@ -14,13 +15,14 @@ document.querySelector('.js-searchbtn').addEventListener('click', function(event
     .then((data) => {
       for (let drink of data.drinks) {
         const drinkName = drink['strDrink'];
-        let image = drink['strDrinkThumb'];
+        const image = drink['strDrinkThumb'];
+        const id = drink ['idDrink'];
 
         if (image === '') {
-          image = 'https://via.placeholder.com/150';
+          image = '../assets/images/cocktails.png';
         }
         //DOM basico
-        list.innerHTML += `<div class="cocktail__card">
+        list.innerHTML += `<div data-id= "${id}" class="cocktail__card js-cocktailCard">
           <h3 class="cocktail__name">${drinkName}</h3>
           <div>
           <img class="cocktail__image" src="${image}">
@@ -32,6 +34,20 @@ document.querySelector('.js-searchbtn').addEventListener('click', function(event
         // drinkLi.appendChild(textLi);
 
         // list.appendChild(drinkLi);
+      }
+
+      const cocktailCard = document.querySelectorAll('.js-cocktailCard');
+      // Guardar en Favoritos
+      let favorites = [];
+      
+      for (let element of cocktailCard) {
+        element.addEventListener ('click', function (event) {
+          event.preventDefault();
+          const idCocktail = event.currentTarget.getAttribute('data-id'); //a qué coctail le doy click
+      
+          
+      
+        });
       }
     });
 });
