@@ -4,27 +4,47 @@
 const coctelInput = document.querySelector('.js-coctelInput');
 const cocktails = document.querySelector('.js-cocktail');
 
+// Variables globales
+let favorites = [];
+
 
 document.querySelector('.js-searchbtn').addEventListener('click', function(event) {
   event.preventDefault();
 
   //Vaciar lista del HTML
   cocktails.innerHTML = '';
- 
+
   // Interpolada variable con el value del Input
   fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${coctelInput.value}`)
     .then((response) => response.json())
     .then((data) => {
+      if (localStorage.getItem('favorites') !== null) {
+        favorites = JSON.parse(localStorage.getItem('favorites'));
+      } else {
+        favorites = [];
+      }
+     
+
       for (let drink of data.drinks) {
         const drinkName = drink['strDrink'];
         const image = drink['strDrinkThumb'];
-        const idDrink = drink ['idDrink'];
+        const idDrink = drink['idDrink'];
+        const drinkFav = favorites.indexOf(idDrink) !== -1; //Busca si el valor idDrink está dentro del array, si es así devuelve la posición, sino, devuelve -1. Operación lógica para convertirlo en booleano.
+        let classFav = '';
+        // let classFav = drinkFav ? 'cocktail__card--fav' : ''; Condicional ternario, en el que si drinkFav es verdadero devuelve la clase, si es falso devuelve vacío. 
+
+        if (drinkFav) {
+          classFav = 'cocktail__card--fav';
+        }else {
+          classFav = '';
+        } //Es lo mismo que el condicional ternario
 
         if (image === '') {
           image = '../assets/images/cocktails.png';
         }
+
         //DOM basico
-        cocktails.innerHTML += `<div data-image="${image}" data-name="${drinkName}" data-id="${idDrink}" data-fav="false" class="cocktail__card js-cocktailCard">
+        cocktails.innerHTML += `<div data-image="${image}" data-name="${drinkName}" data-id="${idDrink}" data-fav="${drinkFav}" class="cocktail__card js-cocktailCard ${classFav}">
           <h3 class="cocktail__name">${drinkName}</h3>
           <div>
           <img class="cocktail__image" src="${image}">
@@ -40,7 +60,6 @@ document.querySelector('.js-searchbtn').addEventListener('click', function(event
 
       const cocktailCards = document.querySelectorAll('.js-cocktailCard');
       // Guardar en Favoritos
-      let favorites = [];
       for (let element of cocktailCards) {
         element.addEventListener ('click', function (event) {
           event.preventDefault();
@@ -61,11 +80,9 @@ document.querySelector('.js-searchbtn').addEventListener('click', function(event
             element.classList.remove('cocktail__card--fav');
             event.currentTarget.setAttribute('data-fav', 'false');
           }
-
-          console.log(favorites);
+          // Guardar en LocalStorage
+          localStorage.setItem('favorites', JSON.stringify(favorites));
         });
       }
     });
-// Guardar en LocalStorage
-
 });
