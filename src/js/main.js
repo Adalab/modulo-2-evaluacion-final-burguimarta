@@ -26,7 +26,7 @@ if (localStorage.getItem('favorites') !== null) {
 function addCocktailFav(id, name, image) {
   cocktailsFav.innerHTML += `<div class="cocktailFav__card" data-id="${id}">
     <h3 class="cocktailFav__name">${name}</h3>
-    <img class="cocktailFav__icon" src="../assets/images/cactus_favorite.svg">
+    <img class="cocktailFav__icon" src="../images/cactus_favorite.svg">
     <img class="cocktailFav__image" src="${image}">
     </div>`;
 }
@@ -58,7 +58,7 @@ function addCocktails(drinks) {
     }
 
     if (image === '') {
-      image = '../assets/images/cocktails.png';
+      image = '../images/cocktails.png';
     }
 
     //DOM basico
