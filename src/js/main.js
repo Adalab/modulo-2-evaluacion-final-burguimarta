@@ -4,6 +4,7 @@
 const coctelInput = document.querySelector('.js-coctelInput');
 const cocktails = document.querySelector('.js-cocktail');
 const cocktailsFav =document.querySelector('.js-CocktailFav');
+const resetBtn =document.querySelector ('.js-resetbtn');
 
 // Variables globales
 let favorites = [];
@@ -21,21 +22,22 @@ if (localStorage.getItem('favorites') !== null) {
 } else {
   favorites = [];
 }
-
+// Pinto en HTML la tarjeta de favoritos
 function addCocktailFav(id, name, image) {
   cocktailsFav.innerHTML += `<div class="cocktailFav__card" data-id="${id}">
-    <h3 class="cocktailFame__name">${name}</h3>
+    <h3 class="cocktailFav__name">${name}</h3>
+    <img class="cocktailFav__icon" src="../assets/images/cactus_favorite.svg">
     <img class="cocktailFav__image" src="${image}">
     </div>`;
 }
-
+//Quito el favorito
 function removeCocktailFav(id) {
- for (let child of cocktailsFav.children) {
-  const idChild = child.getAttribute('data-id')
-  if (idChild === id) {
-    child.remove ();
+  for (let child of cocktailsFav.children) {
+    const idChild = child.getAttribute('data-id');
+    if (idChild === id) {
+      child.remove ();
+    }
   }
- }
 }
 
 // Añado los cócteles de la búsqueda al HTML
@@ -48,11 +50,12 @@ function addCocktails(drinks) {
     let classFav = '';
     // let classFav = drinkFav ? 'cocktail__card--fav' : ''; Condicional ternario, en el que si drinkFav es verdadero devuelve la clase, si es falso devuelve vacío.
 
+    // Igual que el condicional ternario pero en versión mejorada -> en el que si drinkFav es verdadero devuelve la clase, si es falso devuelve vacío.
     if (drinkFav) {
       classFav = 'cocktail__card--fav';
     }else {
       classFav = '';
-    } //Es lo mismo que el condicional ternario
+    }
 
     if (image === '') {
       image = '../assets/images/cocktails.png';
@@ -85,6 +88,7 @@ function addEventCocktails() {
       const image = event.currentTarget.getAttribute('data-image'); //coger la imagen
       const fav = (event.currentTarget.getAttribute('data-fav') === 'true'); // booleano que me dice si es favorito
       // console.log (id + " " + name + " " + image + " " + fav + " "); --> Forma antigua de concatenar
+      
       // condición para pintar con color y despintar los favoritos
       if (!fav) {
         favorites.push(id);
@@ -103,7 +107,7 @@ function addEventCocktails() {
     });
   }
 }
-
+// Escucho el botón de buscar
 document.querySelector('.js-searchbtn').addEventListener('click', function(event) {
   event.preventDefault();
 
@@ -118,3 +122,31 @@ document.querySelector('.js-searchbtn').addEventListener('click', function(event
       addEventCocktails();
     });
 });
+
+// Función de reset
+resetBtn.addEventListener('click', function(event) {
+  event.preventDefault();
+  favorites = [];
+  localStorage.removeItem('favorites');
+  cocktailsFav.innerHTML = '';
+  location.reload();
+});
+
+
+// Botón Burbuja
+const animateButton = function(e) {
+
+  e.preventDefault;
+  //reset animation
+  e.target.classList.remove('animate');
+  e.target.classList.add('animate');
+  setTimeout(function(){
+    e.target.classList.remove('animate');
+  },700);
+};
+
+const bubblyButtons = document.getElementsByClassName('bubbly-button');
+
+for (let i = 0; i < bubblyButtons.length; i++) {
+  bubblyButtons[i].addEventListener('click', animateButton, false);
+}

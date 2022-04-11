@@ -5,27 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Sketch&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/images/favicon-32x32">
     <title>Beach Cocktails</title>
   </head>
   <body>
 
 <main>
 
-  <h1>Buscador de Cócteles</h1>
+  <h1 class="search_title">Buscador de Cócteles</h1>
 
     <form>
-      <input class="js-coctelInput" type="text">
-      <button class="js-searchbtn">Buscar</button>
-      <button type="reset">Reset</button>
+      <input class="search_input search_input--placeholder js-coctelInput" type="text" placeholder="Busca tu bebida" autofocus>
+      <button class="bubbly-button search_btn js-searchbtn">Buscar</button>
+      <button class="search_resetbtn js-resetbtn" type="reset">Reset</button>
     </form>
 
 
-<div>
+<div class="cocktail__container">
   
 <!-- Lista de favoritos -->
 
-    <section>
-      <h2>Mis cócteles favoritos</h2>
+    <section class="cocktailFav__section">
+      <h2 class="cocktailFav__title">Mis cócteles favoritos</h2>
 
       <div class="cocktailFav__container js-CocktailFav">
       </div>
@@ -34,11 +38,11 @@
 
 <!-- Lista normal -->
 
-    <section>
-      <h2>Lista de cócteles</h2>
+    <section class="cocktail__section">
+      <h2 class="cocktail__title">Lista de cócteles</h2>
 
       <div class="cocktail__container js-cocktail">
-        
+
       </div>
     </section>
 
